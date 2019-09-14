@@ -24,20 +24,13 @@ class CreateCommentsTable extends Migration
                 ->on('posts')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->bigInteger('user_id')
-                ->unsigned()
-                ->nullable()
-                ->index();
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onUpdate('cascade')
-                ->onDelete('set null');
             $table->string('name')
                 ->index();
             $table->string('email')
                 ->index();
             $table->text('content');
+            $table->text('info')
+                ->nullable();
             $table->timestamps();
         });
     }

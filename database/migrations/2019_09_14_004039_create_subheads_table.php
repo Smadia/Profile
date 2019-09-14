@@ -14,7 +14,22 @@ class CreateSubheadsTable extends Migration
     public function up()
     {
         Schema::create('subheads', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigInteger('parent_id')
+                ->unsigned()
+                ->index();
+            $table->foreign('parent_id')
+                ->references('id')
+                ->on('heads')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->bigInteger('child_id')
+                ->unsigned()
+                ->index();
+            $table->foreign('child_id')
+                ->references('id')
+                ->on('heads')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -14,7 +14,22 @@ class CreateRolesMenusTable extends Migration
     public function up()
     {
         Schema::create('roles_menus', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigInteger('role_id')
+                ->unsigned()
+                ->index();
+            $table->foreign('role_id')
+                ->references('id')
+                ->on('roles')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->bigInteger('menu_id')
+                ->unsigned()
+                ->index();
+            $table->foreign('menu_id')
+                ->references('id')
+                ->on('menus')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

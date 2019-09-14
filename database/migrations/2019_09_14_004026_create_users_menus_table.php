@@ -14,7 +14,22 @@ class CreateUsersMenusTable extends Migration
     public function up()
     {
         Schema::create('users_menus', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigInteger('user_id')
+                ->unsigned()
+                ->index();
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->bigInteger('menu_id')
+                ->unsigned()
+                ->index();
+            $table->foreign('menu_id')
+                ->references('id')
+                ->on('menus')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -15,6 +15,16 @@ class CreateHeadsTable extends Migration
     {
         Schema::create('heads', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->text('image')
+                ->nullable();
+            $table->string('name')
+                ->index();
+            $table->text('desc')
+                ->nullable();
+            $table->text('metas')
+                ->nullable();
+            $table->boolean('subheading');
+            $table->boolean('posting');
             $table->timestamps();
         });
     }

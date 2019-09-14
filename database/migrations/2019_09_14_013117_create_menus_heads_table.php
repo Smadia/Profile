@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLogsTable extends Migration
+class CreateMenusHeadsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,23 @@ class CreateLogsTable extends Migration
      */
     public function up()
     {
-        Schema::create('logs', function (Blueprint $table) {
-            $table->bigIncrements('id')
-                ->index();
-            $table->bigInteger('user_id')
+        Schema::create('menus_heads', function (Blueprint $table) {
+            $table->bigInteger('menu_id')
                 ->unsigned()
-                ->nullable()
                 ->index();
-            $table->foreign('user_id')
+            $table->foreign('menu_id')
                 ->references('id')
-                ->on('users')
+                ->on('menus')
                 ->onUpdate('cascade')
-                ->onDelete('set null');
-            $table->string('ip');
-            $table->text('activity');
+                ->onDelete('cascade');
+            $table->bigInteger('head_id')
+                ->unsigned()
+                ->index();
+            $table->foreign('head_id')
+                ->references('id')
+                ->on('heads')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -38,6 +41,6 @@ class CreateLogsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('logs');
+        Schema::dropIfExists('menus_heads');
     }
 }

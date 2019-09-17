@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Custom;
+use App\Menu;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -11,11 +12,26 @@ class CustomController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $menu = Menu::query()
+            ->where('route', 'custom')
+            ->first();
+        $customs = Custom::all();
+        try{
+            $currentCustom = Custom::query()->find($request->key);
+        } catch (\Exception $exception){
+            $currentCustom = null;
+        }
+        return view('admin.majestic.custom', [
+            'menu' => $menu,
+            'customs' => $customs,
+            'currentCustom' => $currentCustom,
+            'key' => $request->key
+        ]);
     }
 
     /**
@@ -89,8 +105,8 @@ class CustomController extends Controller
         ]);
 
         if ($custom->type == Custom::IMAGE || $custom->type == Custom::FILE){
-            $request->file('value')->move('custom', $request->file('value')->getClientOriginalExtension());
-            $custom->value = 'custom/'.$request->file('value')->getClientOriginalExtension();
+            $request->file('value')->move('custom', $request->file('value')->getClientOriginalName());
+            $custom->value = 'custom/'.$request->file('value')->getClientOriginalName();
         } else {
             $custom->value = $request->value;
         }

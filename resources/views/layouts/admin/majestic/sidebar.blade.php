@@ -6,7 +6,7 @@
                 <span class="menu-title">Dashboard</span>
             </a>
         </li>
-        @foreach(\App\Menu::all() as $menu)
+        @foreach(\App\Menu::query()->orderBy('name')->get() as $menu)
             @if(Auth::user()->hasMenu($menu))
                 <li class="nav-item">
                     <a class="nav-link" href="{{ (!Route::has('admin.'.$menu->route.'.page') ? '' : route('admin.'.$menu->route.'.page')) }}">

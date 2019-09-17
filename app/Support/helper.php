@@ -1,6 +1,8 @@
 <?php
 
 use Carbon\Carbon;
+use App\Custom;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 if (!function_exists('hari')) {
     /**
@@ -128,5 +130,17 @@ if (!function_exists('asset_exists')) {
     function asset_exists($path)
     {
         return file_exists(public_path($path));
+    }
+}
+
+if (!function_exists('custom')) {
+    function custom($key){
+        try {
+            return Custom::query()
+                ->findOrFail($key)
+                ->value;
+        } catch (ModelNotFoundException $exception) {
+            return '';
+        }
     }
 }

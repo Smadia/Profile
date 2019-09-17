@@ -23,9 +23,9 @@ class CustomSeeder extends Seeder
                     ['name' => 'Ayu', 'no' => '+6289636201616']
                 ]]
             ])],
-            ['key' => 'normal icon', 'type' => Custom::IMAGE, 'value' => 'icon.img'],
-            ['key' => 'type icon', 'type' => Custom::IMAGE, 'value' => 'icon.img'],
-            ['key' => 'favicon', 'type' => Custom::IMAGE, 'value' => 'icon.img'],
+            ['key' => 'normal icon', 'type' => Custom::IMAGE, 'value' => 'custom\Normal Icon.png'],
+            ['key' => 'type icon', 'type' => Custom::IMAGE, 'value' => 'custom\Horizontal Normal Icon Normal Type.png'],
+            ['key' => 'favicon', 'type' => Custom::IMAGE, 'value' => 'custom\Vertical Big Icon Small Type.png'],
             ['key' => 'brosure', 'type' => Custom::FILE, 'value' => 'brosure.pdf'],
             ['key' => 'metas', 'type' => Custom::JSON, 'value' => json_encode([
                 ['meta' => 'Smadia'],

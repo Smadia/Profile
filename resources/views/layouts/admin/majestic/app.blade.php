@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ asset('admin/majestic/vendors/datatables.net-bs4/dataTables.bootstrap4.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/majestic/css/style.css') }}">
     @stack('css')
-    <link rel="shortcut icon" href="images/favicon.png"/>
+    <link rel="shortcut icon" href="{{ asset(custom('normal icon')) }}"/>
 </head>
 <body>
 <div class="container-scroller">

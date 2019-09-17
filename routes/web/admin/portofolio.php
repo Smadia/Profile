@@ -5,4 +5,19 @@ Route::group(['prefix' => 'smadadmin/portofolio', 'namespace' => 'Admin'], funct
         'uses' => 'PortofolioController@index',
         'as' => 'admin.portofolio.page'
     ]);
+
+    Route::patch('/update/{portofolio}', [
+        'uses' => 'PortofolioController@update',
+        'as' => 'admin.portofolio.update'
+    ]);
+
+    Route::get('/delete/{portofolio}', [
+        'uses' => 'PortofolioController@destroy',
+        'as' => 'admin.portofolio.delete'
+    ]);
+
+    Route::put('/store', [
+        'uses' => 'PortofolioController@store',
+        'as' => 'admin.portofolio.store'
+    ]);
 });

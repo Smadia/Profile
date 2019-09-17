@@ -25,7 +25,8 @@ class CreatePortofoliosTable extends Migration
                 ->on('clients')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
-            $table->text('image');
+            $table->text('image')
+                ->nullable();
             $table->string('name');
             $table->text('desc')
                 ->nullable();

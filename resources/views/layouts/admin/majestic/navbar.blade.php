@@ -9,7 +9,7 @@
         </div>
     </div>
     <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
-        <ul class="navbar-nav mr-lg-4 w-100">
+        <ul class="navbar-nav mr-lg-4 w-100" id="search-place">
             <li class="nav-item nav-search d-none d-lg-block w-100">
                 <div class="input-group">
                     <div class="input-group-prepend">
@@ -17,7 +17,7 @@
                   <i class="mdi mdi-magnify"></i>
                 </span>
                     </div>
-                    <input id="search" type="text" class="form-control" placeholder="Search now" aria-label="search" aria-describedby="search">
+                    <input id="search-input" type="text" class="form-control" placeholder="Search now" aria-label="search" aria-describedby="search">
                 </div>
             </li>
         </ul>
@@ -36,10 +36,13 @@
                         <i class="mdi mdi-settings text-primary"></i>
                         Settings
                     </a>
-                    <a class="dropdown-item">
+                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();">
                         <i class="mdi mdi-logout text-primary"></i>
                         Logout
                     </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 </div>
             </li>
         </ul>

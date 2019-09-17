@@ -65,7 +65,7 @@ class PortofolioSeeder extends Seeder
             'demo' => null,
             'services' => [
                 'Mobile Development'
-            ], 'client_id' => 1
+            ], 'client_id' => 6
         ], [
             'image' => 'portofolio.img',
             'name' => 'Lembaga Sertifikasi Profesi UNESA',

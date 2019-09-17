@@ -27,7 +27,8 @@ class MenuSeeder extends Seeder
             'User' => 'mdi mdi-account-multiple',
             'Viewer' => 'mdi mdi-magnify',
             'Services' => 'mdi mdi-image-filter-vintage',
-            'Post' => 'mdi mdi-newspaper'
+            'Post' => 'mdi mdi-newspaper',
+            'Client' => 'mdi mdi-account-network'
         ];
 
         foreach ($data as $name => $for){

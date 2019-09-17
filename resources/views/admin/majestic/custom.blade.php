@@ -86,7 +86,7 @@
                                          alt="{{ $currentCustom->value }}">
                                 @endif
                             </div>
-                            <input type="file" class="form-control" name="value" accept="image/*">
+                            <input type="file" class="form-control-file" name="value" accept="image/*">
                         @elseif($currentCustom->type == $currentCustom::NUMBER)
                             <input type="number" name="value" class="form-control" value="{{ $currentCustom->value }}">
                         @endif
@@ -130,5 +130,7 @@
             jsonEditorInit('table_container', 'text', 'text', 'json_to_table_btn', 'table_to_json_btn');
             $('#json_to_table_btn').click()
         });
+
+        $('#search-place').remove()
     </script>
 @endpush

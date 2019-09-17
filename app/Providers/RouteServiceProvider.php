@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -51,9 +52,20 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-        Route::middleware('web')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/web.php'));
+        $webRoutes = ['web.php'];
+        foreach (['admin', 'guest'] as $type){
+            foreach (scandir(base_path('routes/web/'.$type)) as $path){
+                if (Str::contains($path, '.php')){
+                    $webRoutes[] = 'web/'.$type.'/'.$path;
+                }
+            }
+        }
+
+        foreach ($webRoutes as $webRoute){
+            Route::middleware('web')
+                ->namespace($this->namespace)
+                ->group(base_path('routes/'.$webRoute));
+        }
     }
 
     /**

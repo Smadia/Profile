@@ -16,6 +16,7 @@ class CreateCustomsTable extends Migration
         Schema::create('customs', function (Blueprint $table) {
             $table->string('key')
                 ->primary();
+            $table->string('type');
             $table->text('value');
             $table->timestamps();
         });

@@ -6,12 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
-    const ADMIN = 'admin';
-
-    const GUEST = 'guest';
-
     protected $fillable = [
-        'name', 'route', 'desc', 'created_at', 'updated_at'
+        'name', 'route', 'desc', 'created_at', 'updated_at', 'icon'
     ];
 
     /**
@@ -53,7 +49,7 @@ class Menu extends Model
     {
         $data = $this->belongsToMany(
             Role::class,
-            'roles_menu',
+            'roles_menus',
             'menu_id',
             'role_id'
         )->withTimestamps();
@@ -99,33 +95,5 @@ class Menu extends Model
     {
         return $this->getHeads()
             ->count() > 0;
-    }
-
-    /**
-     * mendapatkan menu admin
-     *
-     * @param bool $query
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
-     */
-    public static function admin($query = true)
-    {
-        $data = Menu::query()
-            ->where('for', self::ADMIN);
-
-        return $query ? $data : $data->get();
-    }
-
-    /**
-     * mendapatkan menu guest
-     *
-     * @param bool $query
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
-     */
-    public static function guest($query = true)
-    {
-        $data = Menu::query()
-            ->where('for', self::GUEST);
-
-        return $query ? $data : $data->get();
     }
 }

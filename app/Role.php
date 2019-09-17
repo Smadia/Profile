@@ -49,7 +49,7 @@ class Role extends Model
     {
         $data = $this->belongsToMany(
             Menu::class,
-            'roles_menu',
+            'roles_menus',
             'role_id',
             'menu_id'
         )->withTimestamps();

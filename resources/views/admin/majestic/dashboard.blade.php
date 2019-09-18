@@ -1,7 +1,15 @@
 @extends('layouts.admin.majestic.app')
 
-@section('title', 'dsds')
+@section('title', 'Dashboard')
 
 @section('content')
 
 @endsection
+
+@push('css')
+
+@endpush
+
+@push('js')
+
+@endpush

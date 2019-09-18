@@ -92,7 +92,7 @@
                                     <textarea name="desc" id="editor{{ $portofolio->id }}" rows="10" class="editor">{{ $portofolio->desc }}</textarea>
                                     <br>
                                     <label>Demo</label>
-                                    <textarea name="demo" class="form-control">{{ $portofolio->demo  }}</textarea>
+                                    <textarea name="demo" class="form-control">{{ $portofolio->demo }}</textarea>
                                     <br>
                                     <button class="btn btn-primary" type="submit">Save</button>
                                     <a onclick="return confirm('Are you sure?')" href="{{ route('admin.portofolio.delete', ['portofolio' => $portofolio->id]) }}" class="btn btn-danger">Delete</a>

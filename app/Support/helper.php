@@ -148,3 +148,9 @@ if (!function_exists('custom')) {
         }
     }
 }
+
+if (!function_exists('fill_empty')) {
+    function fill_empty($var, $fill){
+        return empty($var) ? $fill : $var;
+    }
+}

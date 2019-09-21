@@ -60,12 +60,13 @@ class Role extends Model
     /**
      * cek apakah memiliki menu
      *
-     * @param bool $query
+     * @param Menu $menu
      * @return bool
      */
-    public function hasMenus($query = true)
+    public function hasMenu(Menu $menu)
     {
         return $this->getMenus()
+            ->where('id', $menu->id)
             ->count() > 0;
     }
 }

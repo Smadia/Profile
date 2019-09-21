@@ -2,10 +2,6 @@
 
 @section('title', $menu->name)
 
-@push('css')
-    <link href="//www.tinymce.com/css/codepen.min.css" rel="stylesheet" />
-@endpush
-
 @section('content')
     <form action="{{ url()->current() }}" style="display: none" id="form-search">
         <input type="hidden" name="client" value="{{ $client }}">

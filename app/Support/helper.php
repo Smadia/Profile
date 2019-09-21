@@ -129,6 +129,10 @@ if (!function_exists('boolean_print')) {
 if (!function_exists('asset_exists')) {
     function asset_exists($path)
     {
+        if (empty($path)){
+            return false;
+        }
+
         return file_exists(public_path($path));
     }
 }

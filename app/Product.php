@@ -60,4 +60,15 @@ class Product extends Model
 
         return $query ? $data : $data->get();
     }
+
+    /**
+     * @param User $user
+     * @return bool
+     */
+    public function hasUser(User $user)
+    {
+        return $this->getUsers()
+            ->where('id', $user->id)
+            ->count() > 0;
+    }
 }

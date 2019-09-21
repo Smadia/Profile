@@ -7,6 +7,7 @@
         <input type="hidden" name="q" value="{{ $q }}" id="q">
     </form>
     <div class="card card-body">
+        <h4 class="card-title">Add Client</h4>
         <form action="{{ route('admin.client.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             {{ method_field('put') }}

@@ -26,9 +26,10 @@ class MenuSeeder extends Seeder
             'Menu' => 'mdi mdi-menu',
             'User' => 'mdi mdi-account-multiple',
             'Viewer' => 'mdi mdi-magnify',
-            'Services' => 'mdi mdi-image-filter-vintage',
+            'Service' => 'mdi mdi-image-filter-vintage',
             'Post' => 'mdi mdi-newspaper',
-            'Client' => 'mdi mdi-account-network'
+            'Client' => 'mdi mdi-account-network',
+            'Testimonial' => 'mdi mdi-star'
         ];
 
         foreach ($data as $name => $for){

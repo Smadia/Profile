@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Client;
 use App\Menu;
+use App\Service;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
-class ClientController extends Controller
+class ServiceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,16 +19,16 @@ class ClientController extends Controller
     public function index(Request $request)
     {
         $menu = Menu::query()
-            ->where('route', 'client')
+            ->where('route', 'service')
             ->first();
-        $data = Client::query()
+        $data = Service::query()
             ->when($request->q, function ($query) use ($request) {
                 return $query->where('name', 'like', "%{$request->q}%");
             })->orderBy('id', 'desc')
             ->paginate()
             ->appends($request->all());
 
-        return view('admin.majestic.client', [
+        return view('admin.majestic.service', [
             'data' => $data,
             'q' => $request->q,
             'menu' => $menu
@@ -59,18 +59,18 @@ class ClientController extends Controller
             'image' => 'required',
         ]);
 
-        $client = new Client();
-        $client->name = $request->name;
-        $client->desc = $request->desc;
-        $client->image = '';
-        $client->save();
+        $service = new Service();
+        $service->name = $request->name;
+        $service->desc = $request->desc;
+        $service->image = '';
+        $service->save();
 
         $file = $request->file('image');
-        $fileName = $client->id . '_' . Str::random(40) . '.' . $file->getClientOriginalExtension();
-        $file->move('client', $fileName);
+        $fileName = $service->id . '_' . Str::random(40) . '.' . $file->getClientOriginalExtension();
+        $file->move('service', $fileName);
 
-        $client->image = 'client/' . $fileName;
-        $client->save();
+        $service->image = 'service/' . $fileName;
+        $service->save();
 
         return back()->with('success', 'Succcess!');
     }
@@ -78,7 +78,7 @@ class ClientController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -89,7 +89,7 @@ class ClientController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -101,31 +101,31 @@ class ClientController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param Client $client
+     * @param Service $service
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(Request $request, Client $client)
+    public function update(Request $request, Service $service)
     {
         $this->validate($request, [
             'name' => 'required'
         ]);
 
-        $client->name = $request->name;
-        $client->desc = $request->desc;
+        $service->name = $request->name;
+        $service->desc = $request->desc;
 
         if ($request->hasFile('image')) {
-            if (File::exists($client->image)) {
-                File::delete($client->image);
+            if (File::exists($service->image)) {
+                File::delete($service->image);
             }
 
             $file = $request->file('image');
-            $fileName = $client->id . '_' . Str::random(40) . '.' . $file->getClientOriginalExtension();
-            $file->move('client', $fileName);
-            $client->image = 'client/' . $fileName;
+            $fileName = $service->id . '_' . Str::random(40) . '.' . $file->getClientOriginalExtension();
+            $file->move('service', $fileName);
+            $service->image = 'service/' . $fileName;
         }
 
-        $client->save();
+        $service->save();
 
         return back()->with('success', 'Succcess!');
     }
@@ -133,18 +133,18 @@ class ClientController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Client $client
+     * @param Service $service
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function destroy(Client $client)
+    public function destroy(Service $service)
     {
-        if (File::exists($client->image)) {
-            File::delete($client->image);
+        if (File::exists($service->image)) {
+            File::delete($service->image);
         }
 
-        $client->delete();
+        $service->delete();
 
-        return back()->with('success', '<b>' . $client->name . '</b> is deleted!');
+        return back()->with('success', '<b>' . $service->name . '</b> is deleted!');
     }
 }

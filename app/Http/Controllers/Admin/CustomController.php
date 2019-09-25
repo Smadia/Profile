@@ -24,9 +24,6 @@ class CustomController extends Controller
      */
     public function index(Request $request)
     {
-        $menu = Menu::query()
-            ->where('route', 'custom')
-            ->first();
         $customs = Custom::all();
         try{
             $currentCustom = Custom::query()->find($request->key);
@@ -34,7 +31,6 @@ class CustomController extends Controller
             $currentCustom = null;
         }
         return view('admin.majestic.custom', [
-            'menu' => $menu,
             'customs' => $customs,
             'currentCustom' => $currentCustom,
             'key' => $request->key

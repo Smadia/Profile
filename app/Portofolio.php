@@ -55,11 +55,13 @@ class Portofolio extends Model
     /**
      * cek apakah memiliki service
      *
+     * @param Service $service
      * @return bool
      */
-    public function hasServices()
+    public function hasService(Service $service)
     {
         return $this->getServices()
+            ->where('id', $service->id)
             ->count() > 0;
     }
 }

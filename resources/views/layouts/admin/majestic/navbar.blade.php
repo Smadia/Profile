@@ -36,7 +36,7 @@
                         <i class="mdi mdi-settings text-primary"></i>
                         Settings
                     </a>
-                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();">
+                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); $('#logout-form').submit()">
                         <i class="mdi mdi-logout text-primary"></i>
                         Logout
                     </a>

@@ -2,32 +2,35 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Menu;
-use App\Service;
+use App\Portofolio;
+use App\Testimonial;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
-class ServiceController extends Controller
+class TestimonialController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request)
     {
-        $data = Service::query()
+        $data = Testimonial::query()
             ->when($request->q, function ($query) use ($request) {
                 return $query->where('name', 'like', "%{$request->q}%");
             })->orderBy('id', 'desc')
             ->paginate()
             ->appends($request->all());
+        $portofolios = Portofolio::all();
 
-        return view('admin.majestic.service', [
+        return view('admin.majestic.testinomial', [
             'data' => $data,
             'q' => $request->q,
+            'portofolios' => $portofolios
         ]);
     }
 
@@ -52,21 +55,24 @@ class ServiceController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'image' => 'required',
+            'content' => 'required'
         ]);
 
-        $service = new Service();
-        $service->name = $request->name;
-        $service->desc = $request->desc;
-        $service->image = '';
-        $service->save();
+        $testimonial = new Testimonial();
+        $testimonial->name = $request->name;
+        $testimonial->content = $request->content;
+        $testimonial->jobtitle = $request->jobtitle;
+        $testimonial->helper = $request->helper;
+        $testimonial->portofolio_id = $request->portofolio_id;
+        $testimonial->image = '';
+        $testimonial->save();
 
         $file = $request->file('image');
-        $fileName = $service->id . '_' . Str::random(40) . '.' . $file->getClientOriginalExtension();
-        $file->move('service', $fileName);
+        $fileName = $testimonial->id . '_' . Str::random(40) . '.' . $file->getClientOriginalExtension();
+        $file->move('testimonial', $fileName);
 
-        $service->image = 'service/' . $fileName;
-        $service->save();
+        $testimonial->image = 'testimonial/' . $fileName;
+        $testimonial->save();
 
         return back()->with('success', 'Succcess!');
     }
@@ -97,31 +103,34 @@ class ServiceController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param Service $service
+     * @param Testimonial $testimonial
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(Request $request, Service $service)
+    public function update(Request $request, Testimonial $testimonial)
     {
         $this->validate($request, [
             'name' => 'required'
         ]);
 
-        $service->name = $request->name;
-        $service->desc = $request->desc;
+        $testimonial->name = $request->name;
+        $testimonial->content = $request->content;
+        $testimonial->jobtitle = $request->jobtitle;
+        $testimonial->helper = $request->helper;
+        $testimonial->portofolio_id = $request->portofolio_id;
 
         if ($request->hasFile('image')) {
-            if (File::exists($service->image)) {
-                File::delete($service->image);
+            if (File::exists($testimonial->image)) {
+                File::delete($testimonial->image);
             }
 
             $file = $request->file('image');
-            $fileName = $service->id . '_' . Str::random(40) . '.' . $file->getClientOriginalExtension();
-            $file->move('service', $fileName);
-            $service->image = 'service/' . $fileName;
+            $fileName = $testimonial->id . '_' . Str::random(40) . '.' . $file->getClientOriginalExtension();
+            $file->move('testimonial', $fileName);
+            $testimonial->image = 'testimonial/' . $fileName;
         }
 
-        $service->save();
+        $testimonial->save();
 
         return back()->with('success', 'Succcess!');
     }
@@ -129,18 +138,18 @@ class ServiceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Service $service
+     * @param Testimonial $testimonial
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
-    public function destroy(Service $service)
+    public function destroy(Testimonial $testimonial)
     {
-        if (File::exists($service->image)) {
-            File::delete($service->image);
+        if (File::exists($testimonial->image)) {
+            File::delete($testimonial->image);
         }
 
-        $service->delete();
+        $testimonial->delete();
 
-        return back()->with('success', '<b>' . $service->name . '</b> is deleted!');
+        return back()->with('success', '<b>' . $testimonial->name . '</b> was deleted!');
     }
 }

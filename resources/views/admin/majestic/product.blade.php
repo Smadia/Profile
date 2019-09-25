@@ -1,13 +1,23 @@
 @extends('layouts.admin.majestic.app')
 
-@section('title', $menu->name)
+@section('title', menu('product')->name)
 
 @section('content')
     <form action="{{ url()->current() }}" style="display: none" id="form-search">
         <input type="hidden" name="q" value="{{ $q }}" id="q">
     </form>
-    <div class="card card-body">
-        <h4 class="card-title">Add {{ $menu->name }}</h4>
+
+    <div class="btn-group">
+        <button class="btn btn-primary" onclick="$('#add-data').hide(); $('#list-data').show()">
+            List
+        </button>
+        <button class="btn btn-primary" onclick="$('#add-data').show(); $('#list-data').hide()">
+            Add
+        </button>
+    </div>
+
+    <div class="card card-body" id="add-data" style="display: none">
+        <h4 class="card-title">Add</h4>
         <form action="{{ route('admin.product.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             {{ method_field('put') }}
@@ -44,9 +54,9 @@
             <button class="btn btn-primary" type="submit">Save</button>
         </form>
     </div>
-    <br>
-        <div class="card card-body">
-            <h4 class="card-title">Our Clients</h4>
+
+    <div class="card card-body" id="list-data">
+            <h4 class="card-title">List</h4>
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>

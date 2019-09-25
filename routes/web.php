@@ -15,6 +15,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Route::group(['prefix' => 'smadadmin'], function () {
+    Auth::routes([
+        'register' => false,
+        'reset' => false,
+        'verify' => false,
+    ]);
+});
+
+Route::get('/smadadmin', function () {
+    return redirect()->route('login');
+});
 
 Route::get('/home', 'HomeController@index')->name('home');

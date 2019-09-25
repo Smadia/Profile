@@ -11,7 +11,7 @@ Route::group(['prefix' => 'smadadmin/portofolio', 'namespace' => 'Admin'], funct
         'as' => 'admin.portofolio.update'
     ]);
 
-    Route::get('/delete/{portofolio}', [
+    Route::delete('/delete/{portofolio}', [
         'uses' => 'PortofolioController@destroy',
         'as' => 'admin.portofolio.delete'
     ]);

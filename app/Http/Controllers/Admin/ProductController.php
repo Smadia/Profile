@@ -19,9 +19,6 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $menu = Menu::query()
-            ->where('route', 'product')
-            ->first();
         $users = User::all();
         $data = Product::query()
             ->when($request->q, function ($query) use ($request) {
@@ -31,7 +28,6 @@ class ProductController extends Controller
             ->appends($request->all());
 
         return view('admin.majestic.product', [
-            'menu' => $menu,
             'data' => $data,
             'users' => $users,
             'q' => $request->q
@@ -69,6 +65,7 @@ class ProductController extends Controller
         $model->image = '';
         $model->save();
 
+        $request->users_products = fill_empty($request->users_products, []);
         foreach ($request->users_products as $user){
             $model->getUsers()
                 ->attach($user);
@@ -120,12 +117,11 @@ class ProductController extends Controller
             'name' => 'required'
         ]);
 
-        $request->users_products = empty($request->users_products) ? [] : $request->users_products;
-
         $product->name = $request->name;
         $product->desc = $request->desc;
         $product->demo = $request->demo;
 
+        $request->users_products = fill_empty($request->users_products, []);
         $product->getUsers()
             ->detach();
         foreach ($request->users_products as $user){

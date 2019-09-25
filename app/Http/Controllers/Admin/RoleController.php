@@ -18,9 +18,6 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        $menu = Menu::query()
-            ->where('route', 'role')
-            ->first();
         $menus = Menu::all();
         $users = User::all();
         $data = Role::query()
@@ -31,7 +28,6 @@ class RoleController extends Controller
             ->appends($request->all());
 
         return view('admin.majestic.role', [
-            'menu' => $menu,
             'menus' => $menus,
             'data' => $data,
             'users' => $users,

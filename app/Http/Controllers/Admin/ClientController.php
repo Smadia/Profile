@@ -18,9 +18,6 @@ class ClientController extends Controller
      */
     public function index(Request $request)
     {
-        $menu = Menu::query()
-            ->where('route', 'client')
-            ->first();
         $data = Client::query()
             ->when($request->q, function ($query) use ($request) {
                 return $query->where('name', 'like', "%{$request->q}%");
@@ -31,7 +28,6 @@ class ClientController extends Controller
         return view('admin.majestic.client', [
             'data' => $data,
             'q' => $request->q,
-            'menu' => $menu
         ]);
     }
 
@@ -145,6 +141,6 @@ class ClientController extends Controller
 
         $client->delete();
 
-        return back()->with('success', '<b>' . $client->name . '</b> is deleted!');
+        return back()->with('success', '<b>' . $client->name . '</b> was deleted!');
     }
 }

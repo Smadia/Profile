@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Client;
 use App\Menu;
 use App\Portofolio;
+use App\Service;
 use http\Exception\BadConversionException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -28,11 +29,9 @@ class PortofolioController extends Controller
      */
     public function index(Request $request)
     {
-        $menu = Menu::query()
-            ->where('route', 'custom')
-            ->first();
+        $services = Service::all();
         $clients = Client::all();
-        $portofolios = Portofolio::query()
+        $data = Portofolio::query()
             ->when($request->client, function ($query) use ($request) {
                 return $query->whereHas('getClient', function ($query) use ($request) {
                     return $query->where('name', $request->client);
@@ -45,11 +44,11 @@ class PortofolioController extends Controller
         $client = in_array($request->client, $clients->pluck('name')->toArray()) ? $request->client : null;
 
         return view('admin.majestic.portofolio', [
-            'menu' => $menu,
-            'portofolios' => $portofolios,
+            'data' => $data,
             'clients' => $clients,
             'client' => $client,
-            'q' => $request->q
+            'q' => $request->q,
+            'services' => $services
         ]);
     }
 

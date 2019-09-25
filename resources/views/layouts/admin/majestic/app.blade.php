@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ asset('admin/majestic/vendors/base/vendor.bundle.base.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/majestic/vendors/datatables.net-bs4/dataTables.bootstrap4.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/majestic/css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet"/>
     @stack('css')
     <link rel="shortcut icon" href="{{ asset(custom('normal icon')) }}"/>
 </head>
@@ -53,6 +54,7 @@
 <script src="{{ asset('admin/majestic/js/data-table.js') }}"></script>
 <script src="{{ asset('admin/majestic/js/jquery.dataTables.js') }}"></script>
 <script src="{{ asset('admin/majestic/js/dataTables.bootstrap4.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
 @stack('js')
 </body>
 

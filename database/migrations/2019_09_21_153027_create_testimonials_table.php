@@ -25,19 +25,12 @@ class CreateTestimonialsTable extends Migration
                 ->on('portofolios')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
-            $table->bigInteger('client_id')
-                ->unsigned()
-                ->nullable()
-                ->index();
-            $table->foreign('client_id')
-                ->references('id')
-                ->on('clients')
-                ->onUpdate('cascade')
-                ->onDelete('set null');
             $table->text('image')
                 ->nullable();
             $table->string('name')
                 ->index();
+            $table->string('jobtitle')
+                ->nullable();
             $table->text('content');
             $table->text('helper')
                 ->nullable();

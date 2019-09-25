@@ -1,6 +1,6 @@
 @extends('layouts.admin.majestic.app')
 
-@section('title', $menu->name)
+@section('title', menu('custom')->name)
 
 @push('css')
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
@@ -10,8 +10,17 @@
 @endpush
 
 @section('content')
-    <div class="card card-body">
-        <h4 class="card-title">Add Custom</h4>
+    <div class="btn-group">
+        <button class="btn btn-primary" onclick="$('#add-data').hide(); $('#list-data').show()">
+            List
+        </button>
+        <button class="btn btn-primary" onclick="$('#add-data').show(); $('#list-data').hide()">
+            Add
+        </button>
+    </div>
+
+    <div class="card card-body" id="add-data" style="display: none">
+        <h4 class="card-title">Add</h4>
         <form action="{{ route('admin.custom.store') }}" method="post">
             @csrf
             {{ method_field('put') }}
@@ -33,8 +42,8 @@
             <button class="btn btn-primary">Save</button>
         </form>
     </div>
-    <br>
-    <div class="card">
+
+    <div class="card" id="list-data">
         <div class="dropdown">
             <button class="btn btn-light dropdown-toggle btn-block" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 @if(empty($currentCustom))
@@ -52,7 +61,7 @@
             </div>
         </div>
         <div class="card-body">
-            <h4 class="card-title">{{ $menu->name }}{{ empty($currentCustom) ? '' : ' > '.$currentCustom->key }}</h4>
+            <h4 class="card-title">{{ empty($currentCustom) ? '' : $currentCustom->key }}</h4>
             @if(!empty($currentCustom))
                 <form action="{{ route('admin.custom.update', ['custom' => $currentCustom->key]) }}" method="post"
                       enctype="multipart/form-data">

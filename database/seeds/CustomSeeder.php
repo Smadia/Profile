@@ -33,7 +33,8 @@ class CustomSeeder extends Seeder
                 ['meta' => 'Software House Surabaya']
             ])],
             ['key' => 'address', 'type' => Custom::TEXT, 'value' => ''],
-            ['key' => 'about us', 'type' => Custom::TEXT, 'value' => '']
+            ['key' => 'about us full', 'type' => Custom::TEXT, 'value' => ''],
+            ['key' => 'about us mini', 'type' => Custom::TEXT, 'value' => '']
         ];
 
         foreach ($data as $custom){

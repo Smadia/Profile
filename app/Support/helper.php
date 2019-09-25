@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use App\Custom;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Menu;
 
 if (!function_exists('hari')) {
     /**
@@ -152,5 +153,13 @@ if (!function_exists('custom')) {
 if (!function_exists('fill_empty')) {
     function fill_empty($var, $fill){
         return empty($var) ? $fill : $var;
+    }
+}
+
+if (!function_exists('menu')) {
+    function menu ($routeName){
+        return Menu::query()
+            ->where('route', $routeName)
+            ->first();
     }
 }

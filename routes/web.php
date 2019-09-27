@@ -11,8 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['as' => 'profile.'], function () {
+
+    Route::get('/', [
+        'uses' => 'ProfileController@index',
+        'as' => 'index'
+    ]);
+
+    Route::get('portfolio', [
+        'uses' => 'ProfileController@portfolio',
+        'as' => 'portfolio'
+    ]);
+
 });
 
 Route::group(['prefix' => 'smadadmin'], function () {

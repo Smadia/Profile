@@ -1,0 +1,21 @@
+html, body {
+    overflow-x: hidden;
+}
+
+.portfolio-img {
+    position: relative;
+}
+
+.portfolio-img img {
+    width: 160%;
+}
+
+.portfolio-img.left img {
+    position: relative;
+    left: -75%;
+}
+
+.portfolio-img.right img {
+    position: relative;
+    right: -25%;
+}

@@ -60,7 +60,7 @@ class User extends Authenticatable
     public function hasLogs($query = true)
     {
         return $this->getLogs()
-            ->count() > 0;
+                ->count() > 0;
     }
 
     /**
@@ -84,7 +84,7 @@ class User extends Authenticatable
     public function hasPosts()
     {
         return $this->getPosts()
-            ->count() > 0;
+                ->count() > 0;
     }
 
     /**
@@ -111,33 +111,11 @@ class User extends Authenticatable
      * @param Role|null $role
      * @return bool
      */
-    public function hasRole(Role $role = null)
+    public function hasRole(Role $role)
     {
-        if (!empty($role)){
-            return $this->getRoles()
+        return $this->getRoles()
                 ->where('id', $role->id)
                 ->count() > 0;
-        }
-
-        return $this->getRoles()
-            ->count() > 0;
-    }
-
-    /**
-     * cek apakah user memiliki banyak role
-     *
-     * @param Collection $roles
-     * @return bool
-     */
-    public function hasRoles(Collection $roles)
-    {
-        foreach ($roles as $role){
-            if (!$this->hasRole($role)){
-                return false;
-            }
-        }
-
-        return true;
     }
 
     /**
@@ -159,6 +137,32 @@ class User extends Authenticatable
     }
 
     /**
+     * @param bool $query
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|Collection
+     */
+    public function getAllowedMenus($query = true)
+    {
+        $data = Menu::query()
+            ->whereHas('getRoles.getUsers', function ($query) {
+                return $query->where('id', $this->id);
+            });
+
+        return $query ? $data : $data->get();
+    }
+
+    /**
+     * @param Menu $menu
+     * @return bool
+     */
+    public function isMenuAllowed(Menu $menu)
+    {
+        return $this->getAllowedMenus()
+            ->where('id', $menu->id)
+            ->count() > 0;
+    }
+
+
+    /**
      * cek apakah user memiliki menu tertentu
      *
      * @param Menu $menu
@@ -167,14 +171,14 @@ class User extends Authenticatable
     public function hasMenu(Menu $menu)
     {
         $has = $this->getRoles()
-            ->whereHas('getMenus', function ($query) use ($menu) {
-                return $query->where('id', $menu->id);
-            })->count() > 0;
+                ->whereHas('getMenus', function ($query) use ($menu) {
+                    return $query->where('id', $menu->id);
+                })->count() > 0;
 
-        if ($has){
+        if ($has) {
             $has = $this->getMenus()
-                ->where('id', $menu->id)
-                ->count() > 0;
+                    ->where('id', $menu->id)
+                    ->count() > 0;
         }
 
         return $has;

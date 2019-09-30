@@ -6,6 +6,8 @@ use App\Custom;
 use App\Menu;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class CustomController extends Controller
 {
@@ -108,8 +110,16 @@ class CustomController extends Controller
         ]);
 
         if ($custom->type == Custom::IMAGE || $custom->type == Custom::FILE){
-            $request->file('value')->move('custom', $request->file('value')->getClientOriginalName());
-            $custom->value = 'custom/'.$request->file('value')->getClientOriginalName();
+            if ($request->hasFile('image')) {
+                if (File::exists($custom->value)) {
+                    File::delete($custom->value);
+                }
+
+                $file = $request->file('image');
+                $fileName = $custom->id . '_' . Str::random(40) . '.' . $file->getClientOriginalExtension();
+                $file->move('custom', $fileName);
+                $custom->value = 'custom/' . $fileName;
+            }
         } else {
             $custom->value = $request->value;
         }

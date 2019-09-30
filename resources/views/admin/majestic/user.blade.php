@@ -22,37 +22,38 @@
             @csrf
             {{ method_field('put') }}
             <div class="row">
-                <div class="col-6">
+                <div class="col-4">
                     <label>Name</label>
-                    <input type="text" name="name" class="form-control">
+                    <input type="text" name="name" class="form-control" required>
                 </div>
-                <div class="col-6">
+                <div class="col-4">
+                    <label>Email</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+                <div class="col-4">
                     <label>Image</label>
-                    <input type="file" class="form-control" name="image">
+                    <input type="file" class="form-control" name="image" required>
                 </div>
             </div>
             <br>
             <label>{{ menu('role')->name }}</label>
-            <select name="roles" class="select2" style="width: 100%" multiple>
+            <select name="roles[]" class="select2" style="width: 100%" multiple>
                 @foreach($roles as $role)
                     <option value="{{ $role->id }}">{{ $role->name }}</option>
                 @endforeach
             </select>
             <br>
             <br>
-            <label>{{ menu('menu')->name }}</label>
-            <select name="menus" class="select2" style="width: 100%" multiple>
-                @foreach($menus as $menu)
-                    <option selected value="{{ $menu->id }}">{{ $menu->name }}</option>
-                @endforeach
-            </select>
-            <br>
-            <br>
-            <label>Password</label>
-            <input type="password" name="password" class="form-control">
-            <br>
-            <label>Confirm Password</label>
-            <input type="password" name="password" class="form-control" value="">
+            <div class="row">
+                <div class="col-6">
+                    <label>Password</label>
+                    <input type="password" name="password" class="form-control" minlength="8" required>
+                </div>
+                <div class="col-6">
+                    <label>Confirm Password</label>
+                    <input type="password" name="password_confirmation" class="form-control" minlength="8" required>
+                </div>
+            </div>
             <br>
             <button class="btn btn-primary" type="submit">Save</button>
         </form>
@@ -104,10 +105,45 @@
                     <tr id="row-{{ $user->id }}" style="display: none">
                         <td colspan="5">
                             <div class="card card-body">
-                                <form action="{{ route('admin.user.update', ['user' => $user->id]) }}"
-                                      method="post" enctype="multipart/form-data">
+                                <form action="{{ route('admin.user.update', ['user' => $user->id]) }}" method="post" enctype="multipart/form-data">
                                     @csrf
                                     {{ method_field('patch') }}
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <label>Name</label>
+                                            <input type="text" name="name" class="form-control" value="{{ $user->name }}" required>
+                                        </div>
+                                        <div class="col-4">
+                                            <label>Email</label>
+                                            <input type="email" name="email" class="form-control" value="{{ $user->email }}" required>
+                                        </div>
+                                        <div class="col-4">
+                                            <label>Image</label>
+                                            <input type="file" class="form-control" name="image">
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <label>{{ menu('role')->name }}</label>
+                                    <select name="roles[]" class="select2" style="width: 100%" multiple>
+                                        @foreach($roles as $role)
+                                            <option @if($user->hasRole($role)) selected @endif value="{{ $role->id }}">{{ $role->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <label>{{ menu('menu')->name }}</label>
+                                    <select name="menus[]" class="select2" style="width: 100%" multiple>
+                                        @foreach($user->getAllowedMenus(false) as $menu)
+                                            <option @if($user->hasMenu($menu)) selected @endif value="{{ $menu->id }}">{{ $menu->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <label>Password</label>
+                                    <input type="password" name="password" class="form-control">
+                                    <br>
+                                    <label>Confirm Password</label>
+                                    <input type="password" name="password" class="form-control">
                                     <br>
                                     <button class="btn btn-primary" type="submit">Save</button>
                                 </form>

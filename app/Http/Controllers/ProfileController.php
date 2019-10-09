@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use App\Message;
+use App\Portofolio;
 use App\Service;
 use App\User;
 use Illuminate\Http\Request;
@@ -38,7 +39,13 @@ class ProfileController extends Controller
      */
     public function portfolio()
     {
-        return view('profile.portfolio');
+        $services = Service::all();
+        $portofolios = Portofolio::all();
+
+        return view('profile.portfolio', [
+            'services' => $services,
+            'portofolios' => $portofolios
+        ]);
     }
 
     public function message(Request $request)

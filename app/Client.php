@@ -4,20 +4,43 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property varchar $name name
+ * @property text $image image
+ * @property text $description description
+ * @property timestamp $created_at created at
+ * @property timestamp $updated_at updated at
+ * @property \Illuminate\Database\Eloquent\Collection $portofolio hasMany
+ */
 class Client extends Model
 {
-    protected $fillable = [
-        'logo', 'name', 'desc', 'created_at', 'updated_at'
-    ];
 
     /**
-     * @param bool $query
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Relations\HasMany
+     * Database table name
      */
-    public function getPortofolios($query = false)
-    {
-        $data = $this->hasMany(Portofolio::class, 'client_id');
+    protected $table = 'clients';
 
-        return $query ? $data : $data->get();
+    /**
+     * Mass assignable columns
+     */
+    protected $fillable = ['name',
+        'image',
+        'description'];
+
+    /**
+     * Date time columns.
+     */
+    protected $dates = [];
+
+    /**
+     * portofolios
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function portofolios()
+    {
+        return $this->hasMany(Portofolio::class, 'client_id');
     }
+
+
 }

@@ -14,8 +14,7 @@ class CreatePortofoliosTable extends Migration
     public function up()
     {
         Schema::create('portofolios', function (Blueprint $table) {
-            $table->bigIncrements('id')
-                ->index();
+            $table->bigIncrements('id');
             $table->bigInteger('client_id')
                 ->unsigned()
                 ->nullable()
@@ -25,13 +24,10 @@ class CreatePortofoliosTable extends Migration
                 ->on('clients')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
-            $table->text('image')
-                ->nullable();
-            $table->string('name');
-            $table->text('desc')
-                ->nullable();
-            $table->text('demo')
-                ->nullable();
+            $table->string('name')
+                ->index();
+            $table->text('image');
+            $table->text('description');
             $table->timestamps();
         });
     }

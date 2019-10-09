@@ -25,15 +25,13 @@ class CreateTestimonialsTable extends Migration
                 ->on('portofolios')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
-            $table->text('image')
-                ->nullable();
             $table->string('name')
                 ->index();
+            $table->text('image')
+                ->nullable();
             $table->string('jobtitle')
                 ->nullable();
             $table->text('content');
-            $table->text('helper')
-                ->nullable();
             $table->timestamps();
         });
     }

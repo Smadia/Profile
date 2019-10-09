@@ -12,7 +12,6 @@
 */
 
 Route::group(['as' => 'profile.'], function () {
-
     Route::get('/', [
         'uses' => 'ProfileController@index',
         'as' => 'index'
@@ -23,18 +22,14 @@ Route::group(['as' => 'profile.'], function () {
         'as' => 'portfolio'
     ]);
 
-});
-
-Route::group(['prefix' => 'smadadmin'], function () {
-    Auth::routes([
-        'register' => false,
-        'reset' => false,
-        'verify' => false,
+    Route::put('message', [
+        'uses' => 'ProfileController@message',
+        'as' => 'message'
     ]);
 });
 
-Route::get('/smadadmin', function () {
-    return redirect()->route('login');
-});
-
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});

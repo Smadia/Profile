@@ -4,45 +4,53 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property varchar $name name
+ * @property text $image image
+ * @property text $description description
+ * @property timestamp $created_at created at
+ * @property timestamp $updated_at updated at
+ * @property \Illuminate\Database\Eloquent\Collection $portofolioss belongsToMany
+ * @property \Illuminate\Database\Eloquent\Collection $productss belongsToMany
+ */
 class Service extends Model
 {
-    protected $fillable = [
-        'image', 'name', 'desc', 'created_at', 'updated_at'
-    ];
 
     /**
-     * mendapatkan portofolio dari suatu service
-     * 
-     * @param bool $query
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * Database table name
      */
-    public function getPortofolios($query = true)
-    {
-        $data = $this->belongsToMany(
-            Portofolio::class,
-            'portofolios_services',
-            'service_id',
-            'portofolio_id'
-        )->withTimestamps();
-        
-        return $query ? $data : $data->get();
-    }
+    protected $table = 'services';
 
     /**
-     * mendapatkan product dari suatu service
+     * Mass assignable columns
+     */
+    protected $fillable = ['name',
+        'image',
+        'description'];
+
+    /**
+     * Date time columns.
+     */
+    protected $dates = [];
+
+    /**
+     * portofolios
      *
-     * @param bool $query
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function getProducts($query = true)
+    public function portofolios()
     {
-        $data = $this->belongsToMany(
-            Product::class,
-            'products_services',
-            'service_id',
-            'product_id'
-        )->withTimestamps();
-
-        return $query ? $data : $data->get();
+        return $this->belongsToMany(Portofolio::class, 'portofolios_services');
     }
+
+    /**
+     * productsses
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'products_services');
+    }
+
 }

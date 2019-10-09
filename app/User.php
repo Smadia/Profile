@@ -2,12 +2,11 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends \TCG\Voyager\Models\User
 {
     use Notifiable;
 
@@ -17,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'image'
+        'name', 'email', 'password',
     ];
 
     /**
@@ -39,148 +38,32 @@ class User extends Authenticatable
     ];
 
     /**
-     * mendapatkan log
+     * role
      *
-     * @param bool $query
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function getLogs($query = true)
+    public function role()
     {
-        $data = $this->hasMany(Log::class, 'user_id');
-
-        return $query ? $data : $data->get();
+        return $this->belongsTo(Role::class, 'role_id');
     }
 
     /**
-     * cek apakah punya log
+     * news
      *
-     * @param bool $query
-     * @return bool
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function hasLogs($query = true)
+    public function news()
     {
-        return $this->getLogs()
-                ->count() > 0;
+        return $this->hasMany(News::class, 'user_id');
     }
 
     /**
-     * mendapatkan postingan
+     * roles
      *
-     * @param bool $query
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function getPosts($query = true)
+    public function roles()
     {
-        $data = $this->hasMany(Post::class, 'user_id');
-
-        return $query ? $data : $data->get();
-    }
-
-    /**
-     * cek apakah memiliki post
-     *
-     * @return bool
-     */
-    public function hasPosts()
-    {
-        return $this->getPosts()
-                ->count() > 0;
-    }
-
-    /**
-     * mendapatkan hak akses
-     *
-     * @param bool $query
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function getRoles($query = true)
-    {
-        $data = $this->belongsToMany(
-            Role::class,
-            'users_roles',
-            'user_id',
-            'role_id'
-        )->withTimestamps();
-
-        return $query ? $data : $data->get();
-    }
-
-    /**
-     * cek apakah user mempunyai role
-     *
-     * @param Role|null $role
-     * @return bool
-     */
-    public function hasRole(Role $role)
-    {
-        return $this->getRoles()
-                ->where('id', $role->id)
-                ->count() > 0;
-    }
-
-    /**
-     * mengambil menu
-     *
-     * @param bool $query
-     * @return Collection|\Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function getMenus($query = true)
-    {
-        $data = $this->belongsToMany(
-            Menu::class,
-            'users_menus',
-            'user_id',
-            'menu_id'
-        )->withTimestamps();
-
-        return $query ? $data : $data->get();
-    }
-
-    /**
-     * @param bool $query
-     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|Collection
-     */
-    public function getAllowedMenus($query = true)
-    {
-        $data = Menu::query()
-            ->whereHas('getRoles.getUsers', function ($query) {
-                return $query->where('id', $this->id);
-            });
-
-        return $query ? $data : $data->get();
-    }
-
-    /**
-     * @param Menu $menu
-     * @return bool
-     */
-    public function isMenuAllowed(Menu $menu)
-    {
-        return $this->getAllowedMenus()
-            ->where('id', $menu->id)
-            ->count() > 0;
-    }
-
-
-    /**
-     * cek apakah user memiliki menu tertentu
-     *
-     * @param Menu $menu
-     * @return bool
-     */
-    public function hasMenu(Menu $menu)
-    {
-        $has = $this->getRoles()
-                ->whereHas('getMenus', function ($query) use ($menu) {
-                    return $query->where('id', $menu->id);
-                })->count() > 0;
-
-        if ($has) {
-            $has = $this->getMenus()
-                    ->where('id', $menu->id)
-                    ->count() > 0;
-        }
-
-        return $has;
+        return $this->belongsToMany(Role::class, 'user_roles');
     }
 }

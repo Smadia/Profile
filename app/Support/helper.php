@@ -1,9 +1,7 @@
 <?php
 
 use Carbon\Carbon;
-use App\Custom;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Menu;
+use \Illuminate\Support\Str;
 
 if (!function_exists('hari')) {
     /**
@@ -138,28 +136,20 @@ if (!function_exists('asset_exists')) {
     }
 }
 
-if (!function_exists('custom')) {
-    function custom($key){
-        try {
-            return Custom::query()
-                ->findOrFail($key)
-                ->value;
-        } catch (ModelNotFoundException $exception) {
-            return '';
-        }
-    }
-}
-
 if (!function_exists('fill_empty')) {
     function fill_empty($var, $fill){
         return empty($var) ? $fill : $var;
     }
 }
 
-if (!function_exists('menu')) {
-    function menu ($routeName){
-        return Menu::query()
-            ->where('route', $routeName)
-            ->first();
+if (!function_exists('str_singular')) {
+    function str_singular($value){
+        return Str::singular($value);
+    }
+}
+
+if (!function_exists('camel_case')) {
+    function camel_case($value){
+        return Str::camel($value);
     }
 }

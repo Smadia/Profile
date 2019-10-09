@@ -4,69 +4,63 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property varchar $name name
+ * @property varchar $display_name display name
+ * @property timestamp $created_at created at
+ * @property timestamp $updated_at updated at
+ * @property \Illuminate\Database\Eloquent\Collection $permission belongsToMany
+ * @property \Illuminate\Database\Eloquent\Collection $user hasMany
+ * @property \Illuminate\Database\Eloquent\Collection $userAddition belongsToMany
+ */
 class Role extends Model
 {
-    protected $fillable = [
-        'name', 'created_at', 'updated_at'
-    ];
 
     /**
-     * mendapatkan pengguna
-     * 
-     * @param bool $query
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * Database table name
      */
-    public function getUsers($query = true)
-    {
-        $data = $this->belongsToMany(
-            User::class,
-            'users_roles',
-            'role_id',
-            'user_id'
-        )->withTimestamps();
-        
-        return $query ? $data : $data->get();
-    }
+    protected $table = 'roles';
 
     /**
-     * cek apakah meimiliki user
-     * 
-     * @return bool
+     * Mass assignable columns
      */
-    public function hasUsers()
-    {
-        return $this->getUsers()
-            ->count() > 0;
-    }
+    protected $fillable = ['name',
+        'display_name'];
 
     /**
-     * mendapatkan menu
+     * Date time columns.
+     */
+    protected $dates = [];
+
+    /**
+     * permissions
      *
-     * @param bool $query
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function getMenus($query = true)
+    public function permissions()
     {
-        $data = $this->belongsToMany(
-            Menu::class,
-            'roles_menus',
-            'role_id',
-            'menu_id'
-        )->withTimestamps();
-
-        return $query ? $data : $data->get();
+        return $this->belongsToMany(Permission::class, 'permission_role');
     }
 
     /**
-     * cek apakah memiliki menu
+     * users
      *
-     * @param Menu $menu
-     * @return bool
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function hasMenu(Menu $menu)
+    public function users()
     {
-        return $this->getMenus()
-            ->where('id', $menu->id)
-            ->count() > 0;
+        return $this->hasMany(User::class, 'role_id');
     }
+
+    /**
+     * users
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function userAdditions()
+    {
+        return $this->belongsToMany(User::class, 'user_roles');
+    }
+
+
 }

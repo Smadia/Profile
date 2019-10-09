@@ -16,10 +16,10 @@ class CreateServicesTable extends Migration
         Schema::create('services', function (Blueprint $table) {
             $table->bigIncrements('id')
                 ->index();
-            $table->text('image');
             $table->string('name')
                 ->index();
-            $table->text('desc')
+            $table->text('image');
+            $table->text('description')
                 ->nullable();
             $table->timestamps();
         });

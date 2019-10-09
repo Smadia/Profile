@@ -1,74 +1,46 @@
 <?php
-
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+/**
+   @property varchar $name name
+@property text $image image
+@property text $description description
+@property timestamp $created_at created at
+@property timestamp $updated_at updated at
+@property \Illuminate\Database\Eloquent\Collection $sservice belongsToMany
 
+ */
 class Product extends Model
 {
-    protected $fillable = [
-        'image', 'name', 'desc', 'created_at', 'updated_at', 'demo'
-    ];
 
     /**
-     * mengambil data service
-     *
-     * @param bool $query
-     * @return Model|\Illuminate\Database\Eloquent\Relations\BelongsTo|object|null
-     */
-    public function getServices($query = true)
-    {
-        $data = $this->belongsToMany(
-            Service::class,
-            'products_services',
-            'product_id',
-            'service_id'
-        )->withTimestamps();
-
-        return $query ? $data : $data->get();
-    }
+    * Database table name
+    */
+    protected $table = 'products';
 
     /**
-     * cek apakah memiliki service
-     *
-     * @return bool
-     */
-    public function hasServices(Service $service = null)
-    {
-        if (!empty($service)){
-            return $this->getServices()
-                ->where('id', $service->id)
-                ->count() > 0;
-        }
-
-        return $this->getServices()
-                ->count() > 0;
-    }
+    * Mass assignable columns
+    */
+    protected $fillable=['name',
+'image',
+'description'];
 
     /**
-     * @param bool $query
-     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function getUsers($query = true)
-    {
-        $data = $this->belongsToMany(
-            User::class,
-            'users_products',
-            'product_id',
-            'user_id'
-        )->withTimestamps();
-
-        return $query ? $data : $data->get();
-    }
+    * Date time columns.
+    */
+    protected $dates=[];
 
     /**
-     * @param User $user
-     * @return bool
-     */
-    public function hasUser(User $user)
+    * sservices
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    */
+    public function services()
     {
-        return $this->getUsers()
-            ->where('id', $user->id)
-            ->count() > 0;
+        return $this->belongsToMany(Service::class,'products_services');
     }
+
+
+
 }

@@ -4,64 +4,67 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property bigint $client_id client id
+ * @property varchar $name name
+ * @property text $image image
+ * @property text $description description
+ * @property timestamp $created_at created at
+ * @property timestamp $updated_at updated at
+ * @property Client $client belongsTo
+ * @property \Illuminate\Database\Eloquent\Collection $sservice belongsToMany
+ * @property \Illuminate\Database\Eloquent\Collection $testimonial hasMany
+ */
 class Portofolio extends Model
 {
-    protected $fillable = [
-        'client_id', 'image', 'name', 'desc', 'created_at', 'updated_at', 'demo'
-    ];
 
     /**
-     * mendapatkan data partner
-     *
-     * @param bool $query
-     * @return Model|\Illuminate\Database\Eloquent\Relations\BelongsTo|object|null
+     * Database table name
      */
-    public function getClient($query = true)
-    {
-        $data = $this->belongsTo(Client::class, 'client_id');
+    protected $table = 'portofolios';
 
-        return $query ? $data : $data->first();
+    /**
+     * Mass assignable columns
+     */
+    protected $fillable = ['client_id',
+        'name',
+        'image',
+        'description'];
+
+    /**
+     * Date time columns.
+     */
+    protected $dates = [];
+
+    /**
+     * client
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function client()
+    {
+        return $this->belongsTo(Client::class, 'client_id');
     }
 
     /**
-     * cek apakah memiliki partner
+     * services
      *
-     * @return bool
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function hasClient()
+    public function services()
     {
-        return $this->getClient()
-            ->count() > 0;
+        return $this->belongsToMany(Service::class, 'portofolios_services');
     }
 
     /**
-     * mengambil data service
+     * testimonials
      *
-     * @param bool $query
-     * @return Model|\Illuminate\Database\Eloquent\Relations\BelongsTo|object|null
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function getServices($query = true)
+    public function testimonials()
     {
-        $data = $this->belongsToMany(
-            Service::class,
-            'portofolios_services',
-            'portofolio_id',
-            'service_id'
-        )->withTimestamps();
-
-        return $query ? $data : $data->get();
+        return $this->hasMany(Testimonial::class, 'portofolio_id');
     }
 
-    /**
-     * cek apakah memiliki service
-     *
-     * @param Service $service
-     * @return bool
-     */
-    public function hasService(Service $service)
-    {
-        return $this->getServices()
-            ->where('id', $service->id)
-            ->count() > 0;
-    }
+
 }

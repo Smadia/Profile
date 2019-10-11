@@ -2,6 +2,7 @@
 
 use Carbon\Carbon;
 use \Illuminate\Support\Str;
+use \Illuminate\Support\Facades\Route;
 
 if (!function_exists('hari')) {
     /**
@@ -151,5 +152,11 @@ if (!function_exists('str_singular')) {
 if (!function_exists('camel_case')) {
     function camel_case($value){
         return Str::camel($value);
+    }
+}
+
+if (!function_exists('is_current_route')){
+    function is_current_route($routeName){
+        return Route::currentRouteName() == $routeName;
     }
 }

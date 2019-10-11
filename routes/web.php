@@ -19,7 +19,7 @@ Route::group(['as' => 'profile.'], function () {
 
     Route::get('portfolio', [
         'uses' => 'ProfileController@portfolio',
-        'as' => 'portfolio'
+        'as' => 'portofolio'
     ]);
 
     Route::put('message', [

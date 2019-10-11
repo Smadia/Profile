@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <title>{{ setting('site.title') }}</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    {!! SEO::generate() !!}
+{!! SEO::generate() !!}
 
-    <!-- Favicons -->
+<!-- Favicons -->
     <link href="{{ Voyager::image(setting('site.logo')) }}" rel="icon">
     <link href="{{ Voyager::image(setting('site.logo')) }}" rel="apple-touch-icon">
 
@@ -58,11 +58,10 @@ Header
 
         <nav class="main-nav float-right d-none d-lg-block">
             <ul>
-                <li class="active"><a href="#intro">Home</a></li>
-                <li><a href="#about">About Us</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="{{ route('profile.portfolio') }}">Portfolio</a></li>
-                <li><a href="#footer">Contact Us</a></li>
+                <li class="{{ is_current_route('profile.index') ? 'active' : '' }}"><a
+                        href="{{ route('profile.index') }}">Home</a></li>
+                <li class="{{ is_current_route('profile.portofolio') ? 'active' : '' }}"><a
+                        href="{{ route('profile.portofolio') }}">Portfolio</a></li>
             </ul>
         </nav>
         <!-- .main-nav -->
@@ -92,8 +91,8 @@ Header
                     <div class="footer-links">
                         <h4>Contact Us</h4>
                         <p>
-                            <strong>Phone/WA:</strong> +6289636201616<br>
-                            <strong>Email:</strong> support@smadia.id<br>
+                            <strong>Phone/WA:</strong> {{ setting('site.phone') }}<br>
+                            <strong>Email:</strong> {{ setting('site.email') }}<br>
                         </p>
                     </div>
                     <div class="social-links">

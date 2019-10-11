@@ -8,9 +8,19 @@ use App\Portofolio;
 use App\Service;
 use App\User;
 use Illuminate\Http\Request;
+use Artesaos\SEOTools\Traits\SEOTools as SEOToolsTrait;
 
 class ProfileController extends Controller
 {
+    use SEOToolsTrait;
+
+    public function __construct()
+    {
+        $this->seo()->setTitle(setting('site.title'));
+        $this->seo()->setDescription(setting('site.description'));
+        $this->seo()->twitter()->setSite(setting('site.twitter'));
+        $this->seo()->metatags()->addKeyword(explode('|', setting('site.keywords')));
+    }
 
     /**
      * Halaman awal web

@@ -2,8 +2,18 @@
     --color-smadia-red: rgb(229, 34, 42);
     --color-smadia-yellow: rgb(253, 203, 2);
     --color-smadia-green: rgb(24, 214, 24);
-    --color-smadia-blue: rgb(46, 132, 250); 
-    --color-smadia-light-gray: rgb(229, 229, 229);
+
+    --color-smadia-blue-100: rgb(199, 227, 255);
+    --color-smadia-blue-200: rgb(133, 181, 253);
+    --color-smadia-blue-300: rgb( 76, 149, 252);
+    --color-smadia-blue-400: rgb( 46, 132, 250); 
+    --color-smadia-blue-500: rgb(  5,  96, 225);
+
+    --color-smadia-gray-100: rgb(221, 226, 233);
+    --color-smadia-gray-200: rgb(170, 177, 188);
+    --color-smadia-gray-300: rgb(138, 146, 158);
+    --color-smadia-gray-400: rgb( 73,  85, 100);
+    --color-smadia-gray-500: rgb( 46,  60,  77);
 
     /* Override Bootstrap */
     --blue: rgb(34, 176, 251);
@@ -16,6 +26,8 @@
 .font-weight-medium {
     font-weight: 600 !important;
 }
+
+/* Font size */
 
 .font-size-60 {
     font-size: 60px !important;
@@ -33,10 +45,34 @@
     font-size: 18px !important;
 }
 
+/* Text color */
+
 .text-white-tr-7 {
     color: rgba(255, 255, 255, 0.7) !important;
 }
 
+.text-color-black {
+    color: #000;
+}
+
+.text-color-smadia-blue {
+    color: var(--color-smadia-blue-400);
+}
+
+/* Other text */
+.line-height-1 {
+    line-height: 1em;
+}
+
+.line-height-2 {
+    line-height: 1.5em;
+}
+
+.line-height-3 {
+    line-height: 2em;
+}
+
+/** Header **/
 #header {
     padding-top: 0;
 }
@@ -47,52 +83,12 @@
 }
 
 #topbar.with-bg {
-    background-color: var(--color-smadia-light-gray);
+    background-color: var(--color-smadia-gray-100);
 }
 
-#intro {
-    background:#fff url('../../img/Aset/5.png');
-    background-size: cover;
-    background-position: center;
+#topbar .social-links a:hover {
+    color: var(--color-smadia-blue-400);
 }
-
-#intro .intro-info h2 span {
-    color: var(--color-smadia-blue);
-    font-weight: 600;
-}
-
-#intro .intro-info .btn-get-started, #intro .intro-info .btn-services {
-    background: var(--color-smadia-blue);
-}
-
-#intro .intro-info .btn-get-started {
-    text-transform: none;
-}
-
-#footer .footer-top .footer-newsletter input[type="submit"] {
-    background: var(--color-smadia-blue);
-}
-
-.bg-smadia-blue {
-    background-color: var(--color-smadia-blue);
-}
-
-.text-color-black {
-    color: #000;
-}
-
-.text-color-smadia-blue {
-    color: var(--color-smadia-blue);
-}
-
-.mt-6 {
-    margin-top: 3.25rem !important;
-}
-.mt-7 {
-    margin-top: 3.5rem !important;
-}
-
-/** Hezder **/
 
 #header.header-scrolled, #header.header-pages {
     box-shadow: 0 4px 5px 0 rgba(0,0,0,0.1), 
@@ -111,8 +107,50 @@
 
 }
 
+#intro {
+    background:#fff url('../img/Aset/5.png');
+    background-size: cover;
+    background-position: center;
+}
+
+#intro .intro-info h2 span {
+    color: var(--color-smadia-blue-400);
+    font-weight: 600;
+}
+
+#intro .intro-info .btn-get-started, 
+#intro .intro-info .btn-services {
+    background: var(--color-smadia-blue-400);
+}
+
+#intro .intro-info .btn-get-started:hover, 
+#intro .intro-info .btn-services:hover {
+    background: var(--color-smadia-blue-500);
+}
+
+#intro .intro-info .btn-get-started {
+    text-transform: none;
+}
+
+#footer .footer-top .footer-newsletter input[type="submit"] {
+    background: var(--color-smadia-blue-400);
+}
+
+.bg-smadia-blue {
+    background-color: var(--color-smadia-blue-400);
+}
+
+/* Margin dan padding */
+
+.mt-6 {
+    margin-top: 3.25rem !important;
+}
+.mt-7 {
+    margin-top: 3.5rem !important;
+}
+
 .main-nav a:hover, .main-nav .active > a, .main-nav li:hover > a {
-    color: var(--color-smadia-blue);
+    color: var(--color-smadia-blue-400);
 }
 
 .page-header {
@@ -134,9 +172,34 @@
     background-color: white;
 }
 
+/* Section */
+#call-to-action {
+    background: var(--color-smadia-gray-400);
+}
+
+#call-to-action .cta-btn:hover {
+    background: var(--color-smadia-blue-400);
+    border-color: var(--color-smadia-blue-400);
+}
+
+#footer .footer-top {
+    background: var(--color-smadia-gray-100);
+}
+
+/* Footer section */
+#footer .footer-top .social-links a {
+    background: var(--color-smadia-blue-300);
+}
+
+#footer .footer-top .social-links a:hover {
+    background: var(--color-smadia-blue-400);
+}
+
+/* Back to top dan whatsapp */
+
 .back-to-top {
     bottom: 70px;
-    background: var(--color-smadia-blue); 
+    background: var(--color-smadia-blue-300); 
 	box-shadow: 2px 2px 3px rgba(0,0,0,0.1);
 }
 

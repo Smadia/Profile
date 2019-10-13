@@ -275,10 +275,18 @@ Intro Section
                 <h3>Our Clients</h3>
             </header>
 
-            <div class="owl-carousel clients-carousel">
-                @foreach($clients as $client)
-                    <img src="{{ Voyager::image($client->image) }}" alt="{{ $client->name }}">
-                @endforeach
+            <div class="row justify-content-center">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                    @foreach($clients as $client)
+                        <div class="col-md-3 d-flex justify-content-center align-items-center">
+                            <div>
+                                <img style="width: auto;max-height: 150px;" class="mr-3" src="{{ Voyager::image($client->image) }}" alt="{{ $client->name }}">
+                            </div>
+                        </div>
+                    @endforeach
+                    </div>
+                </div>
             </div>
 
         </div>

@@ -1,8 +1,12 @@
 @extends('layouts.profile.app')
 
 @section('title')
-
+    Our Portfolios
 @endsection
+
+@push('head-tag')
+    <link rel="stylesheet" href="{{ asset('profile/css/portfolio.css') }}"/>
+@endpush
 
 @section('content')
 <!--==========================
@@ -18,9 +22,49 @@ Portfolio Section
         </div>
     </div>
 </section>
+
 <section id="portfolio">
     <div class="container">
-        <div class="row d-flex">
+
+        @foreach ($portofolios as $portofolio)
+        @if($loop->odd)
+
+        <div class="row mt-7 d-flex">
+            <div class="col-lg-7 col-md-7">
+                <div class="portfolio-img left">
+                    <img src="{{ Voyager::image($portofolio->image) }}">
+                </div>
+            </div>
+            
+            <div class="col-lg-5 col-md-5">
+                <h2 class="font-weight-medium">{{ $portofolio->name }}</h2>
+                <div class="font-size-18">
+                    {!! $portofolio->description !!}
+                </div>
+            </div>
+        </div>
+
+        @else
+
+        <div class="row mt-7 d-flex">
+            <div class="col-lg-5 col-md-6 text-right order-sm-1">
+                <h2 class="font-weight-medium">{{ $portofolio->name }}</h2>
+                <div class="font-size-18">
+                    {!! $portofolio->description !!}
+                </div>
+            </div>
+
+            <div class="col-lg-7 col-md-6 order-sm-2">
+                <div class="portfolio-img right">
+                    <img src="{{ Voyager::image($portofolio->image) }}">
+                </div>
+            </div>
+        </div>
+
+        @endif
+        @endforeach
+
+        {{-- <div class="row d-flex">
             <div class="col-lg-12">
                 <ul id="portfolio-flters">
                     <li data-filter="*" class="filter-active">All</li>
@@ -37,7 +81,6 @@ Portfolio Section
                         <img src="{{ Voyager::image($portofolio->image) }}" class="img-fluid" alt="">
                         <div class="portfolio-info">
                             <h4><a href="#">{{ $portofolio->name }}</a></h4>
-{{--                            {!! $portofolio->description !!}--}}
                             <div>
                                 <a href="{{ Voyager::image($portofolio->image) }}" data-lightbox="portfolio" data-title="{{ $portofolio->name }}" class="link-preview" title="Preview"><i class="ion ion-eye"></i></a>
                                 <a href="#" class="link-details" title="More Details"><i class="ion ion-android-open"></i></a>
@@ -46,6 +89,19 @@ Portfolio Section
                     </div>
                 </div>
             @endforeach
+        </div> --}}
+    </div>
+</section>
+
+<section id="call-to-action" class="wow fadeInUp">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 text-center text-lg-left">
+                <h3 class="cta-title">{{ setting('site.tagline') }}</h3>
+                {!! setting('site.tagline_desc') !!}
+            </div>
+            <div class="col-lg-3 cta-btn-container text-center">
+            </div>
         </div>
     </div>
 </section>

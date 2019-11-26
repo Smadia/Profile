@@ -8,8 +8,8 @@
     {!! SEO::generate() !!}
 
 <!-- Favicons -->
-    <link href="{{ Voyager::image(setting('site.logo')) }}" rel="icon">
-    <link href="{{ Voyager::image(setting('site.logo')) }}" rel="apple-touch-icon">
+    <link href="{{ asset(Voyager::image(setting('site.logo'))) }}" rel="icon">
+    <link href="{{ asset(Voyager::image(setting('site.logo'))) }}" rel="apple-touch-icon">
 
     <!-- Google Fonts -->
     <link
@@ -30,6 +30,7 @@
     <link href="{{ asset('profile/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('profile/css/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('profile/css/index.css') }}" rel="stylesheet">
+    @stack('head-tag')
 </head>
 
 <body>
@@ -37,8 +38,7 @@
 Header
 ============================-->
 <header id="header">
-
-    <div id="topbar">
+    <div id="topbar" class="@if(Route::currentRouteName() != 'profile.index') with-bg @endif">
         <div class="container">
             <div class="social-links">
                 <a target="_blank" href="https://twitter.com/smadiaID" class="twitter"><i class="fa fa-twitter"></i></a>

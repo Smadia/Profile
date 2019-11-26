@@ -14,18 +14,24 @@ class DatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        $this->call(CustomSeeder::class);
-
-        $this->call(UserSeeder::class);
-        $this->call(MenuSeeder::class);
-        $this->call(RoleSeeder::class);
-        $this->call(UserRoleSeeder::class);
-        $this->call(RoleMenuSeeder::class);
-        $this->call(UserMenuSeeder::class);
-        $this->call(ServiceSeeder::class);
-        $this->call(ClientSeeder::class);
-        $this->call(ProductSeeder::class);
-        $this->call(PortofolioSeeder::class);
-        $this->call(TestimonialSeeder::class);
+        $this->call(RolesTableSeeder::class);
+        $this->call(PermissionsTableSeeder::class);
+        $this->call(DataTypesTableSeeder::class);
+        $this->call(DataRowsTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
+        $this->call(PermissionRoleTableSeeder::class);
+        $this->call(UserRolesTableSeeder::class);
+        $this->call(NewsTableSeeder::class);
+        $this->call(ClientsTableSeeder::class);
+        $this->call(PortofoliosTableSeeder::class);
+        $this->call(TestimonialsTableSeeder::class);
+        $this->call(ServicesTableSeeder::class);
+        $this->call(PortofoliosServicesTableSeeder::class);
+        $this->call(ProductsTableSeeder::class);
+        $this->call(ProductsServicesTableSeeder::class);
+        $this->call(MenusTableSeeder::class);
+        $this->call(MenuItemsTableSeeder::class);
+        $this->call(TranslationsTableSeeder::class);
+        $this->call(SettingsTableSeeder::class);
     }
 }
